@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>Employees data</h3>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ employees.id }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ employees.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ employees.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Hiredate</th>
+                <td>{% if employees.hireDate %}{{ employees.hireDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ employees.age }}</td>
+            </tr>
+        </tbody>
+    </table>
+        <li>
+            <a href="{{ path('crud_index') }}">Home</a>
+        </li>
+    <br>
+{% endblock %}

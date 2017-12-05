@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>Employees list</h3>
+
+    <table style="width: 600px;">
+        <thead style="background: #fc0">
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Hiredate</th>
+                <th>Age</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody style="background: #ccc">
+        {% for crud in employees %}
+            <tr>
+                <td><a href="{{ path('crud_show', { 'id': crud.id }) }}">{{ crud.id }}</a></td>
+                <td>{{ crud.firstName }}</td>
+                <td>{{ crud.lastName }}</td>
+                <td>{% if crud.hireDate %}{{ crud.hireDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ crud.age }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <p> <a href="{{ path('crud_show', { 'id': crud.id }) }}">select</a></p>
+                        </li>
+                        <li>
+                            <p><a href="{{ path('crud_edit', { 'id': crud.id }) }}">update</a>
+                        </li>
+                        <li>
+                            <p><a href="{{ path('crud_delete', { 'id': crud.id }) }}">delete</a>
+                        </li>
+                        <li>
+                            <p><a href="{{ path('crud_new') }}">insert</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
