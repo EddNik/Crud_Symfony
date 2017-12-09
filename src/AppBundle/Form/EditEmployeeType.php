@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CrudType extends AbstractType
+class EditEmployeeType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -22,18 +22,13 @@ class CrudType extends AbstractType
             ->add('age')
             ->add('save', SubmitType::class, array('label' => 'Download Data'));
     }
-    
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Crud'
+            'data_class' => 'AppBundle\Entity\Employee'
         ));
     }
-
-
-
-
 }

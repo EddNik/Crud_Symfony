@@ -1,16 +1,17 @@
 <?php
+declare(strict_types=1);
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Crud
+ * Employee
  *
- * @ORM\Table(name="crud")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CrudRepository")
+ * @ORM\Table(name="employee")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EmployeeRepository")
  */
-class Crud
+class Employee
 {
     /**
      * @var int
@@ -63,12 +64,11 @@ class Crud
      *
      * @param string $firstName
      *
-     * @return Crud
+     * @return Employee
      */
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-
         return $this;
     }
 
@@ -87,7 +87,7 @@ class Crud
      *
      * @param string $lastName
      *
-     * @return Crud
+     * @return Employee
      */
     public function setLastName($lastName)
     {
@@ -111,7 +111,7 @@ class Crud
      *
      * @param \DateTime $hireDate
      *
-     * @return Crud
+     * @return Employee
      */
     public function setHireDate($hireDate)
     {
@@ -143,7 +143,7 @@ class Crud
      *
      * @param int $age
      *
-     * @return Crud
+     * @return Employee
      */
     public function setAge($age)
     {

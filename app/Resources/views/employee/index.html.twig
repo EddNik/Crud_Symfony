@@ -15,26 +15,26 @@
             </tr>
         </thead>
         <tbody style="background: #ccc">
-        {% for crud in employees %}
+        {% for employee in employees %}
             <tr>
-                <td><a href="{{ path('crud_show', { 'id': crud.id }) }}">{{ crud.id }}</a></td>
-                <td>{{ crud.firstName }}</td>
-                <td>{{ crud.lastName }}</td>
-                <td>{% if crud.hireDate %}{{ crud.hireDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ crud.age }}</td>
+                <td><a href="{{ path('employee_show', { 'id': employee.id }) }}">{{ employee.id }}</a></td>
+                <td>{{ employee.firstName }}</td>
+                <td>{{ employee.lastName }}</td>
+                <td>{% if employee.hireDate %}{{ employee.hireDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ employee.age }}</td>
                 <td>
                     <ul>
                         <li>
-                            <p> <a href="{{ path('crud_show', { 'id': crud.id }) }}">select</a></p>
+                            <p> <a href="{{ path('employee_show', { 'id': employee.id }) }}">select</a></p>
                         </li>
                         <li>
-                            <p><a href="{{ path('crud_edit', { 'id': crud.id }) }}">update</a>
+                            <p><a href="{{ path('employee_edit', { 'id': employee.id }) }}">update</a>
                         </li>
                         <li>
-                            <p><a href="{{ path('crud_delete', { 'id': crud.id }) }}">delete</a>
+                            <p><a href="{{ path('employee_delete', { 'id': employee.id }) }}">delete</a>
                         </li>
                         <li>
-                            <p><a href="{{ path('crud_new') }}">insert</a>
+                            <p><a href="{{ path('employee_new') }}">insert</a>
                         </li>
                     </ul>
                 </td>

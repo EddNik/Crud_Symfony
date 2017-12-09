@@ -2,11 +2,11 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Crud;
+use AppBundle\Entity\Employee;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
-class DefaultArticleData extends Fixture
+class EmployeeData extends Fixture
 {
     /**
      * Load data fixtures with the passed EntityManager
@@ -15,12 +15,12 @@ class DefaultArticleData extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $crud = new Crud();
-        $crud->setFirstName('Tomas');
-        $crud->setLastName('Hardy');
-        $crud->setHireDate(new \DateTime());
-        $crud->setAge(35);
-        $manager->persist($crud);
+        $employee = new Employee();
+        $employee->setFirstName('Tomas');
+        $employee->setLastName('Hardy');
+        $employee->setHireDate(new \DateTime());
+        $employee->setAge(35);
+        $manager->persist($employee);
         $manager->flush();
     }
 }
