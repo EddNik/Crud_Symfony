@@ -35,7 +35,12 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",
+        "phpunit/dbunit": "^3.0",
+        "phpunit/php-invoker": "^1.1",
+        "phpunit/phpunit": "^6.5",
         "sensio/generator-bundle": "^3.0",
+        "symfony/browser-kit": "^4.0",
+        "symfony/css-selector": "^4.0",
         "symfony/phpunit-bridge": "^3.0"
     },
     "scripts": {
