@@ -9,7 +9,7 @@ services:
 sudo: false
 
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS employee;'
 
 before_script:
   - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
@@ -22,8 +22,8 @@ before_script:
 
 test:
   adapter: mysql2
-  database: myapp_test
-  username: travis
+  database: employee
+  username: root
   encoding: utf8
 
 script: phpunit
