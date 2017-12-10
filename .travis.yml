@@ -9,10 +9,10 @@ services:
 sudo: false
 
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS employee;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
 
 before_script:
-  - COMPOSER_ROOT_VERSION=dev-bootcamp composer --prefer-source --dev install
+  - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
   - bin/console doctrine:database:create
   - bin/console doctrine:schema:update --force
   - bin/console doctrine:fixtures:load --append
@@ -22,11 +22,11 @@ before_script:
 
 test:
   adapter: mysql2
-  database: employee
-  username: root
+  database: myapp_test
+  username: travis
   encoding: utf8
 
-script: phpunit
+script: vendor/bin/phpunit
 
 
 dist: precise
