@@ -2,7 +2,6 @@
 
 namespace AppBundle\Form;
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -18,9 +17,9 @@ class EditEmployeeType extends AbstractType
     {
         $builder->add('firstName')
             ->add('lastName')
-            ->add('hireDate',DateTimeType::class)
+            ->add('hireDate', DateTimeType::class)
             ->add('age')
-            ->add('save', SubmitType::class, array('label' => 'Download Data'));
+            ->add('save', SubmitType::class, array('label' => 'Download'));
     }
     /**
      * {@inheritdoc}
