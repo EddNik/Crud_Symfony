@@ -16,6 +16,9 @@ before_script:
   - bin/console doctrine:database:create
   - bin/console doctrine:schema:update --force
   - bin/console doctrine:fixtures:load --append
+  - bin/console doctrine:fixtures:load --append
+  - bin/console doctrine:fixtures:load --append
+  - bin/console doctrine:fixtures:load --append
 
 test:
   adapter: mysql2
