@@ -9,8 +9,7 @@ services:
 sudo: false
 
 before_install:
-  - sudo apt-get update
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS myapp_test;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS employee;'
 
 before_script:
   - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
@@ -20,12 +19,11 @@ before_script:
 
 test:
   adapter: mysql2
-  database: myapp_test
+  database: employee
   username: travis
   encoding: utf8
 
-script:
-      - phpunit
-      - bundle exec ./bin/travis-lint
+script: phpunit
+
 
 dist: precise
