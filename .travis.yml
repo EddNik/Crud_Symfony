@@ -1,0 +1,31 @@
+language: php
+
+php:
+  - 7.1.11
+
+services:
+  - mysql
+
+sudo: false
+
+before_install:
+  - sudo apt-get update
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS myapp_test;'
+
+before_script:
+  - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
+  - bin/console doctrine:database:create
+  - bin/console doctrine:schema:update --force
+  - bin/console doctrine:fixtures:load -q
+
+test:
+  adapter: mysql2
+  database: myapp_test
+  username: travis
+  encoding: utf8
+
+script:
+      - phpunit
+      - bundle exec ./bin/travis-lint
+
+dist: precise
