@@ -1,6 +1,5 @@
 imports:
     - { resource: config_dev.yml }
-    - { resource: parameters.yml.dist }
 
 framework:
     test: ~
@@ -15,11 +14,3 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
-
-doctrine:
-     ...
-    dbal:
-        host:    '%database_host%'
-        dbname:   '%database_name%'
-        user:     '%database_user%'
-        password: ~
