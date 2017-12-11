@@ -19,7 +19,7 @@ class EditEmployeeType extends AbstractType
             ->add('lastName')
             ->add('hireDate', DateTimeType::class)
             ->add('age')
-            ->add('save', SubmitType::class, array('label' => 'Download'));
+            ->add('save', SubmitType::class, array('label' => 'Download data'));
     }
     /**
      * {@inheritdoc}

@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+
 /**
  * EmployeeRepository
  *
@@ -8,16 +9,18 @@ namespace AppBundle\Repository;
  * repository methods below.
  */
 use Doctrine\ORM\EntityRepository;
+
 class EmployeeRepository extends EntityRepository
 {
     public function searchByName($name)
     {
         return $this->createQueryBuilder('a')
             ->where('a.name LIKE :name')
-            ->setParameter('name', '%'.$name.'%')
+            ->setParameter('name', '%' . $name . '%')
             ->getQuery()
             ->getResult();
     }
+
     public function findAgeGreaterThan($age)
     {
         return $this->createQueryBuilder('a')

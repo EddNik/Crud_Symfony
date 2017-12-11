@@ -1,13 +1,16 @@
 <?php
 
 namespace Tests\AppBundle\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
 class EmployeeControllerTest extends WebTestCase
 {
     public function createApplication()
     {
         return require __DIR__ . 'EmployeeControllerTest.php';
     }
+
     public function testIndexAction()
     {
         $client = static::createClient();
@@ -26,7 +29,8 @@ class EmployeeControllerTest extends WebTestCase
             ->link();
         $client->click($link);
     }
-        public function testDeleteAction()
+
+    public function testDeleteAction()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/employee/');
@@ -39,6 +43,7 @@ class EmployeeControllerTest extends WebTestCase
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isOk());
     }
+
     public function testNewAction()
     {
         $client = static::createClient();
@@ -61,6 +66,7 @@ class EmployeeControllerTest extends WebTestCase
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isOk());
     }
+
     public function testEditAction()
     {
         $client = static::createClient();
@@ -77,7 +83,7 @@ class EmployeeControllerTest extends WebTestCase
             'edit_employee[hireDate][time][hour]' => '12',
             'edit_employee[hireDate][time][minute]' => '24',
             'edit_employee[age]' => '1',
-            ));
+        ));
         $client->submit($form);
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();

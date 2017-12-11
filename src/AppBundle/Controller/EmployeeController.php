@@ -29,6 +29,7 @@ class EmployeeController extends Controller
             'employees' => $employee,
         ));
     }
+
     /**
      * Creates a new employee entity.
      *
@@ -51,6 +52,7 @@ class EmployeeController extends Controller
             'form' => $form->createView()
         ));
     }
+
     /**
      * Find and display a employee entity.
      *
@@ -64,13 +66,15 @@ class EmployeeController extends Controller
             'employees' => $employee,
         ));
     }
+
     /**
      * Update entity
      * @Route("/{id}/edit", name="employee_edit")
      *
      */
     public function editAction(Request $request, Employee $employee)
-    {   dump($employee);
+    {
+        dump($employee);
         $editForm = $this->createForm('AppBundle\Form\EditEmployeeType', $employee);
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -82,6 +86,7 @@ class EmployeeController extends Controller
             'update_form' => $editForm->createView(),
         ));
     }
+
     /**
      * Deletes a employee entity.
      * @Route("/{id}/delete", name="employee_delete")

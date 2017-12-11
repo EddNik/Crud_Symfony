@@ -5,14 +5,14 @@
 
     <table style="width: 600px;">
         <thead style="background: #fc0">
-            <tr>
-                <th>Id</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Hiredate</th>
-                <th>Age</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Hiredate</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody style="background: #ccc">
         {% for employee in employees %}
@@ -25,7 +25,7 @@
                 <td>
                     <ul>
                         <li>
-                            <p> <a href="{{ path('employee_show', { 'id': employee.id }) }}">select</a></p>
+                            <p><a href="{{ path('employee_show', { 'id': employee.id }) }}">select</a></p>
                         </li>
                         <li>
                             <p><a href="{{ path('employee_edit', { 'id': employee.id }) }}">update</a>

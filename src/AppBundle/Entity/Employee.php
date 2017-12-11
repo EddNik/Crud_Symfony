@@ -47,7 +47,7 @@ class Employee
      * @var int
      * @ORM\Column(name="age", type="integer")
      */
-     private $age;
+    private $age;
 
     /**
      * Get id
@@ -92,7 +92,6 @@ class Employee
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-
         return $this;
     }
 
@@ -116,7 +115,6 @@ class Employee
     public function setHireDate($hireDate)
     {
         $this->hireDate = $hireDate;
-
         return $this;
     }
 
@@ -129,6 +127,7 @@ class Employee
     {
         return $this->hireDate;
     }
+
     /**
      * Get age
      *
@@ -138,6 +137,7 @@ class Employee
     {
         return $this->age;
     }
+
     /**
      * Set age
      *
@@ -150,6 +150,4 @@ class Employee
         $this->age = $age;
         return $this;
     }
-
 }
-
