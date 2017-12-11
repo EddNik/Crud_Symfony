@@ -16,9 +16,9 @@ before_script:
   - bin/console doctrine:fixtures:load --append
   - bin/console doctrine:fixtures:load --append
 
-
 test:
   #adapter: mysql2
+  host: 127.0.0.1
   database: employee_test
   username: travis
   encoding: utf8
