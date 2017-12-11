@@ -7,7 +7,7 @@ services:
   - mysql
 
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+  #- mysql -e 'CREATE DATABASE IF NOT EXISTS myapp_test;'
 
 before_script:
   - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install

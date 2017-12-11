@@ -4,7 +4,7 @@
 parameters:
     database_host: 127.0.0.1
     database_port: ~
-    database_name: travis_ci_test
+    database_name: myapp_test
     database_user: travis
     database_password: ~
 
