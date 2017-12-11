@@ -6,8 +6,6 @@ php:
 services:
   - mysql
 
-sudo: false
-
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS myapp_test;'
 
