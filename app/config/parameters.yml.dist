@@ -4,7 +4,7 @@
 parameters:
     database_host: 127.0.0.1
     database_port: ~
-    database_name: employee
+    database_name: employee_test
     database_user: travis
     database_password: ~
 
