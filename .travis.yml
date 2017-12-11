@@ -13,6 +13,7 @@ before_script:
   - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
   - bin/console doctrine:database:create
   - bin/console doctrine:schema:update --force
+  - bin/console doctrine:fixtures:load --env=test
   - bin/console doctrine:fixtures:load --append
   - bin/console doctrine:fixtures:load --append
 
