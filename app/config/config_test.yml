@@ -15,10 +15,10 @@ web_profiler:
 swiftmailer:
     disable_delivery: true
 
-doctrine:
+#doctrine:
     # ...
-    dbal:
-        host:     localhost
-        dbname:   employee
-        user:     root
-        password: root
+    #dbal:
+    #    host:     localhost
+    #    dbname:   employee
+    #    user:     root
+    #    password: root
