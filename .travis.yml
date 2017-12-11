@@ -19,7 +19,7 @@ before_script:
 
 test:
   adapter: mysql2
-  database: myapp_test
+  database: employee
   username: travis
   encoding: utf8
 
