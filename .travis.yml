@@ -18,7 +18,7 @@ before_script:
 
 
 test:
-  adapter: mysql2
+  #adapter: mysql2
   database: employee_test
   username: travis
   encoding: utf8
@@ -26,4 +26,4 @@ test:
 script: vendor/bin/phpunit
 
 
-dist: precise
+#dist: precise
