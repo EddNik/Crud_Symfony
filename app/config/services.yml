@@ -4,6 +4,11 @@ parameters:
     #parameter_name: value
 
 services:
+    iptrace.listener:
+            class: AppBundle\EventListener\IpTraceSubscriber
+            tags:
+                - { name: doctrine.event_subscriber, connection: default }
+            arguments: ['@twig', '@swiftmailer.mailer']
     # default configuration for services in *this* file
     _defaults:
         # automatically injects dependencies in your services

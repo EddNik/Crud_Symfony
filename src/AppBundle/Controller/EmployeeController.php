@@ -3,22 +3,24 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Employee;
+use AppBundle\Entity\User;
+use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
  * Employee controller.
- *
- * @Route("employee")
  */
 class EmployeeController extends Controller
 {
     /**
      * Lists all employee entities.
      *
-     * @Route("/", name="employee_index")
+     * @Route("/employee", name="employee_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -28,12 +30,13 @@ class EmployeeController extends Controller
         return $this->render('employee/index.html.twig', array(
             'employees' => $employee,
         ));
+        //$this->adminAction();
     }
 
     /**
      * Creates a new employee entity.
      *
-     * @Route("/new", name="employee_new")
+     * @Route("/employee/new", name="employee_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -56,7 +59,7 @@ class EmployeeController extends Controller
     /**
      * Find and display a employee entity.
      *
-     * @Route("/{id}", name="employee_show")
+     * @Route("/employee/{id}", name="employee_show")
      * @Method("GET")
      */
     public function showAction(Employee $employee)
@@ -69,12 +72,12 @@ class EmployeeController extends Controller
 
     /**
      * Update entity
-     * @Route("/{id}/edit", name="employee_edit")
+     * @Route("/employee/{id}/edit", name="employee_edit")
      *
      */
     public function editAction(Request $request, Employee $employee)
     {
-        dump($employee);
+        //dump($employee);
         $editForm = $this->createForm('AppBundle\Form\EditEmployeeType', $employee);
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -89,7 +92,7 @@ class EmployeeController extends Controller
 
     /**
      * Deletes a employee entity.
-     * @Route("/{id}/delete", name="employee_delete")
+     * @Route("/employee/{id}/delete", name="employee_delete")
      *
      */
     public function deleteAction(Request $request, Employee $employee)
@@ -105,5 +108,41 @@ class EmployeeController extends Controller
         return $this->render('employee/delete.html.twig', array(
             'employees' => $employee,
             'delete_form' => $deleteForm->createView()));
+    }
+
+    /**
+     * @Route("/auth/register", name="registration")
+     */
+    public function registerAction(Request $request, UserPasswordEncoderInterface $encoder)
+    {
+        // whatever *your* User object is
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $encoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('access');
+        }
+        return $this->render(
+            'security/register.html.twig',
+            array('form' => $form->createView())
+        );
+    }
+
+    /**
+     * @Route("/auth/login", name="access")
+     */
+    public function loginAction(AuthenticationUtils $authUtils)
+    {
+        $error = $authUtils->getLastAuthenticationError();
+        $lastUsername = $authUtils->getLastUsername();
+        return $this->render('security/login.html.twig', array(
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ));
     }
 }

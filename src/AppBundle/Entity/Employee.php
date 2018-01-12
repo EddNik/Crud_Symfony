@@ -3,16 +3,25 @@ declare(strict_types=1);
 
 namespace AppBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\IpTraceable\Traits\IpTraceableEntity;
 
 /**
  * Employee
  *
  * @ORM\Table(name="employee")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\EmployeeRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EmployeeRepository") *
  */
 class Employee
 {
+    /**
+     * Hook ip-traceable behavior
+     * updates createdFromIp, updatedFromIp fields
+     */
+    use IpTraceableEntity;
+
     /**
      * @var int
      *
@@ -48,6 +57,14 @@ class Employee
      * @ORM\Column(name="age", type="integer")
      */
     private $age;
+
+    /**
+     * @var datetime $contentChangedFromIp
+     *
+     * @ORM\Column(name="content_changed_by", type="string", nullable=true, length=45)
+     * @Gedmo\IpTraceable(on="change", field={"firstName", "lastName", "hireDate", "age", "id"})
+     */
+    private $contentChangedFromIp;
 
     /**
      * Get id
@@ -149,5 +166,13 @@ class Employee
     {
         $this->age = $age;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentChangedFromIp(): string
+    {
+        return (string) $this->contentChangedFromIp;
     }
 }
