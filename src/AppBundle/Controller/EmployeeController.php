@@ -5,9 +5,10 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Employee;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -30,7 +31,6 @@ class EmployeeController extends Controller
         return $this->render('employee/index.html.twig', array(
             'employees' => $employee,
         ));
-        //$this->adminAction();
     }
 
     /**
@@ -48,8 +48,14 @@ class EmployeeController extends Controller
             $cr = $this->getDoctrine()->getManager();
             $cr->persist($employee);
             $cr->flush();
+
+            $event = new GenericEvent($employee);
+            $eventDispatcher = $this->get('event_dispatcher');
+            $eventDispatcher->dispatch('articleCreated', $event);
+
             return $this->redirectToRoute('employee_index');
         }
+
         return $this->render('employee/new.html.twig', array(
             'employees' => $employee,
             'form' => $form->createView()
@@ -77,15 +83,19 @@ class EmployeeController extends Controller
      */
     public function editAction(Request $request, Employee $employee)
     {
-        //dump($employee);
         $editForm = $this->createForm('AppBundle\Form\EditEmployeeType', $employee);
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            $event = new GenericEvent($employee);
+            $eventDispatcher = $this->get('event_dispatcher');
+            $eventDispatcher->dispatch('articleUpdate', $event);
+
             return $this->redirectToRoute('employee_index');
         }
         return $this->render('employee/update.html.twig', array(
-            'employee' => $employee,
+            'employees' => $employee,
             'update_form' => $editForm->createView(),
         ));
     }
@@ -103,6 +113,11 @@ class EmployeeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($employee);
             $em->flush();
+
+            $event = new GenericEvent($employee);
+            $eventDispatcher = $this->get('event_dispatcher');
+            $eventDispatcher->dispatch('articleDelete', $event);
+
             return $this->redirectToRoute('employee_index');
         }
         return $this->render('employee/delete.html.twig', array(
@@ -115,7 +130,6 @@ class EmployeeController extends Controller
      */
     public function registerAction(Request $request, UserPasswordEncoderInterface $encoder)
     {
-        // whatever *your* User object is
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);

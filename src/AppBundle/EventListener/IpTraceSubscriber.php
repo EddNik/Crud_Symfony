@@ -2,15 +2,14 @@
 
 namespace AppBundle\EventListener;
 
-use AppBundle\Entity\Employee;
-use Doctrine\Common\EventSubscriber;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Swift_Message;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 /**
  * @property bool needsFlush
  */
-class IpTraceSubscriber implements EventSubscriber
+class IpTraceSubscriber implements EventSubscriberInterface
 {
     protected $templater;
     protected $mailer;
@@ -21,50 +20,38 @@ class IpTraceSubscriber implements EventSubscriber
         $this->mailer = $mailer;
     }
 
-    public function getSubscribedEvents()
+    public static function getSubscribedEvents()
     {
         return array(
-            'postPersist',
-            'postUpdate',
-            'postRemove'
+            'articleCreated' => ['index', 0],
+            'articleDelete' => ['index', 0],
+            'articleUpdate' => ['index', 5],
         );
     }
 
-    public function postUpdate(LifecycleEventArgs $args)
+    public function index(GenericEvent $event)
     {
-        $this->index($args);
-    }
-
-    public function index(LifecycleEventArgs $args)
-    {
-        $entity = $args->getObject();
-        if ($entity instanceof Employee) {
-            $message = new Swift_Message();
-            $message->setSubject('Data of employee ID ' . $entity->getId() . ' it is ' . $entity->getFirstName() . ' was changed');
-            $message->setFrom('evyskrebtsov@gmail.com');
-            $message->setTo('nikinna86@gmail.com');
+        $entity = $event->getSubject();
+        // var_dump($entity);
+        $message = new Swift_Message();
+        $message->setSubject('Data of employee ID ' . $entity->getId() . ' it is ' . $entity->getFirstName() . ' was changed');
+        $message->setFrom('gmail@gmail.com');
+        try {
             $message->setBody(
                 $this->templater->render(
-                'mail/employee.html.twig',
-                array('firstName' => $entity->getFirstName(),
-                    'lastName' => $entity->getLastName(),
-                    'hireDate' => $entity->getHireDate(),
-                    'age' => $entity->getAge(),
+                    'mail/employee.html.twig',
+                    array('firstName' => $entity->getFirstName(),
+                        'lastName' => $entity->getLastName(),
+                        'hireDate' => $entity->getHireDate(),
+                        'age' => $entity->getAge()
                     )
-            ),
+                ),
                 'text/html'
             );
-            $this->mailer->send($message);
+        } catch (\Twig_Error_Loader $e) {
+        } catch (\Twig_Error_Runtime $e) {
+        } catch (\Twig_Error_Syntax $e) {
         }
-    }
-
-    public function postPersist(LifecycleEventArgs $args)
-    {
-        $this->index($args);
-    }
-
-    public function postRemove(LifecycleEventArgs $args)
-    {
-        $this->index($args);
+        $this->mailer->send($message);
     }
 }

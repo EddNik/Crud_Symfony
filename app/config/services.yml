@@ -2,14 +2,13 @@
 # https://symfony.com/doc/current/service_container.html
 parameters:
     #parameter_name: value
-
 services:
-    iptrace.listener:
-            class: AppBundle\EventListener\IpTraceSubscriber
-            tags:
-                - { name: doctrine.event_subscriber, connection: default }
-            arguments: ['@twig', '@swiftmailer.mailer']
-    # default configuration for services in *this* file
+    app.event_listener.ip_trace_subscriber:
+        class: AppBundle\EventListener\IpTraceSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+        arguments: ['@twig', '@swiftmailer.mailer']
+# default configuration for services in *this* file
     _defaults:
         # automatically injects dependencies in your services
         autowire: true
